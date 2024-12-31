@@ -1,11 +1,11 @@
 import random
-import time
+import numpy as np
 from datetime import datetime
 
 num_places = 1000000000
 min_i = 0
 max_i= num_places - 1
-space = [0] * num_places
+space = np.zeros(num_places, dtype=np.int32)
 frog_start = int(num_places / 2)
 frog = frog_start
 space[frog] = 1
@@ -33,8 +33,8 @@ def check_done():
     global frog_start
     global all_visited
     if not all_visited:
-        for i in space:
-            if i != 1:
+        for i in range(len(space)):
+            if space[i] != 1:
                 return False 
     
     if not all_visited:
