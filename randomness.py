@@ -6,8 +6,15 @@ num_places = 1000000000
 min_i = 0
 max_i= num_places - 1
 space = [0] * num_places
-frog = int(num_places / 2)
+frog_start = int(num_places / 2)
+frog = frog_start
 space[frog] = 1
+all_visited = False
+
+def getnow():
+    now = datetime.now()
+
+    return now.strftime("%m/%d/%Y %I:%M:%S %p")
 
 def random_move():
     global frog
@@ -17,24 +24,34 @@ def random_move():
         frog = new_frog
     
     if space[frog] == 0:
-        print('new space!', frog)
+        print(f'New space found! Time: {getnow()} Location: {frog}')
 
     space[frog] = 1
 
-
 def check_done():
-    for i in space:
-        if i != 1:
-            return False 
+    global frog
+    global frog_start
+    global all_visited
+    if not all_visited:
+        for i in space:
+            if i != 1:
+                return False 
+    
+    if not all_visited:
+        all_visited = True
+        print(f'All locations have been visited!!! Waiting to return back to the start... Time: {getnow()}')
+    
+    if not frog == frog_start:
+        return False
 
     return True
 
 
-started = datetime.now()
+started = getnow()
 print(f'time started: {started}')
 while not check_done():
-    time.sleep(0.001)
+    # time.sleep(0.001)
     random_move()
-ended = datetime.now()
-print(f'time started {ended}')
+ended = getnow()
+print(f'time started {started}')
 print(f'time ended {ended}')
